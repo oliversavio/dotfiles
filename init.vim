@@ -29,9 +29,12 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'fatih/vim-go'
+Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 colorscheme gruvbox
+
+" colorscheme dracula 
 highlight Normal guibg=none
 let g:airline_theme='dark'
 
@@ -42,32 +45,13 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <silent> <F11> :set spell!<cr>
 inoremap <silent> <F11> <C-O>:set spell!<cr>
+nnoremap <leader>ee :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 imap <tab> <Plug>(completion_smart_tab)
 imap <s-tab> <Plug>(completion_smart_s_tab)
 
 
 let g:completion_matching_strategy_list = ["exact","substring","fuzzy"]
-" lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
 
-" use omni completion provided by lsp
-" autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-" let pipenv_venv_path = system('pipenv --venv')
-" The above system() call produces a non zero exit code whenever
-" a proper virtual environment has not been found.
-" So, second, we only point YCM to the virtual environment when
-" the call to 'pipenv --venv' was successful.
-" Remember, that 'pipenv --venv' only points to the root directory
-" of the virtual environment, so we have to append a full path to
-" the python executable.
-" if strlen(pipenv_venv_path) > 0
-"  let venv_path = substitute(pipenv_venv_path, '\n', '', '')
-"   let python_binary_path = venv_path . '/bin/python'
-"   lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach, pyls.plugins.jedi.environment=python_binary_path}
-" else
-" lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
-" endif
-"
-"
 lua << EOF
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
@@ -118,7 +102,7 @@ end
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
-local servers = { "pyls" ,"gopls"}
+local servers = { "pyls" ,"gopls", "metals"}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
