@@ -16,6 +16,7 @@ set signcolumn=yes
 set colorcolumn=80
 set number
 set completeopt=menuone,noinsert,noselect
+set relativenumber
 
 call plug#begin('~/.vim/plugged')
 Plug 'nvim-lua/popup.nvim'
@@ -29,12 +30,13 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'fatih/vim-go'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'tpope/vim-fugitive'
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
-colorscheme gruvbox
 
-" colorscheme dracula 
+" colorscheme gruvbox
+colorscheme nord
 highlight Normal guibg=none
 let g:airline_theme='dark'
 
