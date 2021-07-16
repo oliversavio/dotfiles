@@ -48,6 +48,7 @@ call plug#end()
 colorscheme nord
 highlight Normal guibg=none
 let g:airline_theme='nord'
+lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
 let mapleader = " "
 nnoremap <leader>ff <cmd>Telescope git_files<cr>
