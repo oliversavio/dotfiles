@@ -45,12 +45,8 @@ let g:airline_theme='nord'
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 let mapleader = " "
 
-" quick fix list nav
-nnoremap <C-j> :cnext<CR>zz
-nnoremap <C-k> :cprev<CR>zz
-" quick fix list nav
-
 source ~/.config/nvim/plugins/telescope.vim
+source ~/.config/nvim/plugins/nav.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/nvimlsp.vim
 source ~/.config/nvim/plugins/metals.vim
