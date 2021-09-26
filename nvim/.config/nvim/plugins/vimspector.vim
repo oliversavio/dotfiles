@@ -1,4 +1,4 @@
-let g:python3_host_prog='/usr/local/bin/python3'
+let g:python3_host_prog='/usr/bin/python3'
 let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <leader>m :MaximizerToggle!<CR>
 nnoremap <leader>dd :call vimspector#Launch()<CR>

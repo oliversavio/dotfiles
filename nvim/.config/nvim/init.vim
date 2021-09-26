@@ -27,6 +27,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-lua/completion-nvim'
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-fugitive'
@@ -37,6 +38,7 @@ Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
+Plug 'hashivim/vim-terraform'
 call plug#end()
 
 colorscheme nord
