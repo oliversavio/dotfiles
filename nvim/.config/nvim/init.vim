@@ -37,17 +37,64 @@ Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
+Plug 'mattn/emmet-vim'
+Plug 'leafOfTree/vim-vue-plugin'
+Plug 'hashivim/vim-terraform'
 call plug#end()
 
 colorscheme nord
-highlight Normal guibg=none
+highlight Normal guifg=none
 let g:airline_theme='nord'
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 let mapleader = " "
+
+
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
+
+
+let g:user_emmet_mode='n'
+let g:user_emmet_leader_key=','
+
+let g:vim_vue_plugin_config = { 
+      \'syntax': {
+      \   'template': ['html'],
+      \   'script': ['javascript'],
+      \   'style': ['css'],
+      \},
+      \'full_syntax': [],
+      \'initial_indent': [],
+      \'attribute': 0,
+      \'keyword': 0,
+      \'foldexpr': 0,
+      \'debug': 0,
+      \}
+
+" Must have remaps
+" Undo Breakpoints
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" Jumplist for numbered jumping
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
+" Moving text -- This needs a bit more work!!
+" vnoremap J :m '>+1'<CR>gv=gv    
+" vnoremap K :m '<-2'<CR>gv=gv    
+" inoremap <C-j> :m .+1<CR>==    
+" inoremap <C-k> :m .-2<CR>==    
+
+" nnoremap <leader>j :m .+1<CR>==    
+" nnoremap <leader>k :m .-2<CR>==    
+"" Must have remaps
 
 source ~/.config/nvim/plugins/telescope.vim
 source ~/.config/nvim/plugins/nav.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/nvimlsp.vim
 source ~/.config/nvim/plugins/metals.vim
-
