@@ -1,3 +1,4 @@
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go']
 let g:python3_host_prog='/usr/bin/python3'
 let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <leader>m :MaximizerToggle!<CR>

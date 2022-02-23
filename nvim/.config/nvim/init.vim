@@ -15,7 +15,7 @@ set scrolloff=8
 set signcolumn=yes
 set colorcolumn=80
 set number
-set completeopt=menuone,noinsert,noselect
+" set completeopt=menuone,noinsert,noselect
 set relativenumber
 
 call plug#begin('~/.vim/plugged')
@@ -28,7 +28,15 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
-Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'onsails/lspkind-nvim'
+
 Plug 'tpope/vim-fugitive'
 Plug 'arcticicestudio/nord-vim'
 Plug 'scalameta/nvim-metals'
@@ -98,8 +106,78 @@ vnoremap J :m '>+1<CR>gv=gv
 " nnoremap <leader>k :m .-2<CR>==    
 "" Must have remaps
 
+
+" COMPLETION CONFIG
+set completeopt=menu,menuone,noselect
+
+lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+  local lspkind = require('lspkind')
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+   expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      end,
+    },
+    mapping = {
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' }, -- For vsnip users.
+    }, {
+      { name = 'buffer' },
+    }),
+
+    formatting = {
+    -- Youtube: How to set up nice formatting for your sources.
+    format = lspkind.cmp_format {
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        path = "[path]",
+        vsnip = "[snip]",
+      },
+    },
+  },
+
+
+
+
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+
+
+EOF
+
+
+
+" END COMPLETION CONFIG
+
+
 source ~/.config/nvim/plugins/telescope.vim
 source ~/.config/nvim/plugins/nav.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/nvimlsp.vim
-source ~/.config/nvim/plugins/metals.vim
+" source ~/.config/nvim/plugins/metals.vim
