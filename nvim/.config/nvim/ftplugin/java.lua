@@ -98,5 +98,5 @@ require('jdtls').start_or_attach(config)
 
   -- Java Specific --
   vim.api.nvim_set_keymap("n", "<leader>oi", "<Cmd>lua require'jdtls'.organize_imports()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>ca", "<Cmd>lua require'jdtls'.code_action()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<leader>ca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 

@@ -50,6 +50,7 @@ Plug 'leafOfTree/vim-vue-plugin'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'mfussenegger/nvim-jdtls'
+Plug 'kosayoda/nvim-lightbulb'
 call plug#end()
 
 colorscheme nord
