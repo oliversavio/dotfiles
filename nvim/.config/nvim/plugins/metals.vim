@@ -23,7 +23,7 @@ nnoremap <silent> ]c          <cmd>lua vim.lsp.diagnostic.goto_next { wrap = fal
 "-----------------------------------------------------------------------------
 " nvim-metals setup with a few additions such as nvim-completions
 "-----------------------------------------------------------------------------
-:lua << EOF
+lua << EOF
   metals_config = require'metals'.bare_config
   metals_config.settings = {
      showImplicitArguments = true,
@@ -46,12 +46,12 @@ nnoremap <silent> ]c          <cmd>lua vim.lsp.diagnostic.goto_next { wrap = fal
   )
 EOF
 
-if has('nvim-0.5')
+" if has('nvim-0.5')
   augroup lsp
     au!
     au FileType scala,sbt lua require('metals').initialize_or_attach(metals_config)
   augroup end
-endif
+" endif
 
 "-----------------------------------------------------------------------------
 " completion-nvim settings

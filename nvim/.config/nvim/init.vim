@@ -49,6 +49,7 @@ Plug 'mattn/emmet-vim'
 Plug 'leafOfTree/vim-vue-plugin'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'mfussenegger/nvim-jdtls'
 call plug#end()
 
 colorscheme nord
