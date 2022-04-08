@@ -1,3 +1,5 @@
+" Ensure autocmd works for Filetype
+set shortmess-=F
 "-----------------------------------------------------------------------------
 " nvim-lsp Mappings
 "-----------------------------------------------------------------------------
@@ -19,51 +21,33 @@ nnoremap <silent> ]c          <cmd>lua vim.lsp.diagnostic.goto_next { wrap = fal
 "-----------------------------------------------------------------------------
 " nvim-lsp Settings
 "-----------------------------------------------------------------------------
-
+lua << EOF
+local cmd = vim.cmd
+cmd([[augroup lsp]])
+cmd([[autocmd!]])
+cmd([[autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
+-- NOTE: You may or may not want java included here. You will need it if you want basic Java support
+-- but it may also conflict if you are using something like nvim-jdtls which also works on a java filetype
+-- autocmd.
+cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach(metals_config)]])
+cmd([[augroup end]])
+EOF
 "-----------------------------------------------------------------------------
 " nvim-metals setup with a few additions such as nvim-completions
 "-----------------------------------------------------------------------------
 lua << EOF
-  metals_config = require'metals'.bare_config
-  metals_config.settings = {
-     showImplicitArguments = true,
-     excludedPackages = {
-       "akka.actor.typed.javadsl",
-       "com.github.swagger.akka.javadsl"
-     }
-  }
+metals_config = require("metals").bare_config()
+metals_config.settings = {
+  showImplicitArguments = true,
+  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+  serverVersion = "0.11.2",
+}
 
-  metals_config.on_attach = function()
-    require'completion'.on_attach();
-  end
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+metals_config.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-  metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = {
-        prefix = 'Ôö¶',
-      }
-    }
-  )
 EOF
 
-" if has('nvim-0.5')
-  augroup lsp
-    au!
-    au FileType scala,sbt lua require('metals').initialize_or_attach(metals_config)
-  augroup end
-" endif
-
-"-----------------------------------------------------------------------------
-" completion-nvim settings
-"-----------------------------------------------------------------------------
-" Use <Tab> and <S-Tab> to navigate through popup menu
-" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-"-----------------------------------------------------------------------------
-" Helpful general settings
-"-----------------------------------------------------------------------------
-" Needed for compltions _only_ if you aren't using completion-nvim
 autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " Set completeopt to have a better completion experience
@@ -72,6 +56,4 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-" Ensure autocmd works for Filetype
-set shortmess-=F
 

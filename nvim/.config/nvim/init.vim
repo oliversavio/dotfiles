@@ -156,11 +156,7 @@ lua <<EOF
       },
     },
   },
-
-
-
-
-  })
+})
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline('/', {
@@ -168,8 +164,6 @@ lua <<EOF
       { name = 'buffer' }
     }
   })
-
-
 
 EOF
 
@@ -182,4 +176,4 @@ source ~/.config/nvim/plugins/telescope.vim
 source ~/.config/nvim/plugins/nav.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/nvimlsp.vim
-" source ~/.config/nvim/plugins/metals.vim
+source ~/.config/nvim/plugins/metals.vim
