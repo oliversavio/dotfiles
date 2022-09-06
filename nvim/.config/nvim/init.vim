@@ -32,9 +32,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'rafamadriz/friendly-snippets'
+"Plug 'hrsh7th/cmp-vsnip'
+"Plug 'hrsh7th/vim-vsnip'
+Plug 'SirVer/ultisnips'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'onsails/lspkind-nvim'
 
 Plug 'tpope/vim-fugitive'
@@ -51,6 +52,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'mfussenegger/nvim-jdtls'
 Plug 'kosayoda/nvim-lightbulb'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 colorscheme nord
@@ -59,6 +61,8 @@ let g:airline_theme='nord'
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 let mapleader = " "
 
+
+let g:rustfmt_autosave = 1
 
 :command WQ wq
 :command Wq wq
@@ -120,9 +124,9 @@ lua <<EOF
     snippet = {
       -- REQUIRED - you must specify a snippet engine
    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
         -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
         -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
       end,
     },
@@ -139,7 +143,8 @@ lua <<EOF
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'vsnip' }, -- For vsnip users.
+      { name = 'ultisnips' }, -- For ultisnips users.
     }, {
       { name = 'buffer' },
     }),
@@ -152,7 +157,7 @@ lua <<EOF
         buffer = "[buf]",
         nvim_lsp = "[LSP]",
         path = "[path]",
-        vsnip = "[snip]",
+        ultisnips = "[snip]",
       },
     },
   },
